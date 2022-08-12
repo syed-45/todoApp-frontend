@@ -1,7 +1,9 @@
 export interface todoType {
+  id: number;
   todo: string;
   creationDate?: Date;
 }
+
 function TodoList(props: todoType): JSX.Element {
   return (
     <>

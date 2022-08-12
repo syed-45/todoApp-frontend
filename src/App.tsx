@@ -1,6 +1,7 @@
 import "./App.css";
 import { useState } from "react";
 import axios from "axios";
+import TodoList, { todoType } from "./Components/todoList";
 
 // function updateTodoDB() {
 //   axios.post("https://todo-list-syed.herokuapp.com/items/",{"todo":"go shopping!"})
@@ -12,6 +13,13 @@ import axios from "axios";
 function App(): JSX.Element {
   const [inputText, setInputText] = useState("");
   const [text, setText] = useState("");
+  const [allTodos, setAllTodos] = useState<JSX.Element[]>([])
+
+  axios.get("https://todo-list-syed.herokuapp.com/items/").then((res) => {
+        console.log(res);
+        setAllTodos(res.data.map((oneData: any) => <TodoList todo={oneData.todo} id={oneData.id} key={oneData.id}/>))
+        // setText(res.data[7].todo);
+  });
 
   const handleOnEnter = (key: string): void => {
     if (key === "Enter") {
@@ -28,6 +36,7 @@ function App(): JSX.Element {
     setInputText(input);
   };
 
+
   return (
     <>
       <h1>TODO APP</h1>
@@ -38,9 +47,8 @@ function App(): JSX.Element {
         onChange={(ev) => handleInputChange(ev.target.value)}
         placeholder="Create a new todo..."
       ></input>
-      <main>
-        {/* divs collected here from database in REST API stored in Heroku DB */}
-        {text}
+      <main>        
+        {allTodos}
         <div className="todoListClass"> - go gorceries </div>{" "}
         <div className="editClass">EDIT </div>
         <div className="deleteClass"> DELETE</div>
