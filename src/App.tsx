@@ -11,17 +11,16 @@ import axios from "axios";
 
 function App(): JSX.Element {
   const [inputText, setInputText] = useState("");
-  const [text, setText] = useState("")
+  const [text, setText] = useState("");
 
   const handleOnEnter = (key: string): void => {
     if (key === "Enter") {
       console.log("entered!");
       //send current input to backend
-      axios.get("https://todo-list-syed.herokuapp.com/items/")
-    .then((res) => {
-      console.log(res);
-      setText(res.data[7].todo)
-    });
+      axios.get("https://todo-list-syed.herokuapp.com/items/").then((res) => {
+        console.log(res);
+        setText(res.data[7].todo);
+      });
     }
   };
 
