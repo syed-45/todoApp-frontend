@@ -14,14 +14,13 @@ h1 {
 }
 
 .editClass {
-    display: inline-block;
-    background-color: rgb(99, 255, 47);
-    width: 5%;
+  display: inline-block;
+  background-color: rgb(99, 255, 47);
+  width: 5%;
 }
 
 .deleteClass {
-    display: inline-block;
-    background-color: red;
-    width: 5%;
+  display: inline-block;
+  background-color: red;
+  width: 5%;
 }
-
