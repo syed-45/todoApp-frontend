@@ -1,14 +1,7 @@
 import "./App.css";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import TodoList, { todoType } from "./Components/todoList";
-
-// function updateTodoDB() {
-//   axios.post("https://todo-list-syed.herokuapp.com/items/",{"todo":"go shopping!"})
-//     .then((res) => console.log(res));
-// }
-
-// updateTodoDB()
+import TodoList from "./Components/todoList";
 
 function App(): JSX.Element {
   const [inputText, setInputText] = useState("");
@@ -27,8 +20,6 @@ function App(): JSX.Element {
 
   const handleOnEnter = (key: string): void => {
     if (key === "Enter") {
-      console.log("entered!");
-      //send current input to backend
       axios
         .post("https://todo-list-syed.herokuapp.com/items/", {
           todo: inputText,

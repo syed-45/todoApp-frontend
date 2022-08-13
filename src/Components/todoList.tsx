@@ -1,3 +1,4 @@
+import axios from "axios";
 import { useState } from "react";
 
 export interface todoType {
@@ -8,19 +9,36 @@ export interface todoType {
 }
 
 function TodoList(props: todoType): JSX.Element {
-  const [todoEdit, setTodoEdit] = useState(true);
+  const [todoReadOnly, setTodoReadOnly] = useState(true);
+  const [todoInput, setTodoInput] = useState(props.todo);
+
+  const handleTodoEdit = (editText: string): void => {
+    setTodoInput(editText);
+  };
+
+  const handleOnEditEnter = (key: string): void => {
+    if (key === "Enter") {
+      axios.patch(`https://todo-list-syed.herokuapp.com/items/${props.id}`, {
+        todo: todoInput,
+      });
+      setTodoReadOnly(true);
+    }
+  };
+
   return (
     <>
       <input
         className="todoListClass"
-        placeholder={props.todo}
-        readOnly={todoEdit}
+        value={todoInput}
+        readOnly={todoReadOnly}
         id={"inputTodo" + props.id.toString()}
+        onChange={(ev) => handleTodoEdit(ev.target.value)}
+        onKeyPress={(ev) => handleOnEditEnter(ev.key)}
       ></input>
-      <div className="editClass" onClick={() => setTodoEdit(false)}>
+      <button className="editClass" onClick={() => setTodoReadOnly(false)}>
         EDIT{" "}
-      </div>
-      <div className="deleteClass"> DELETE</div>
+      </button>
+      <button className="deleteClass"> DELETE</button>
     </>
   );
 }
