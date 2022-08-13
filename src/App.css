@@ -6,6 +6,7 @@ h1 {
   background-color: rgb(241 241 241);
   width: 80%;
   display: inline-block;
+  border: none;
 }
 
 .addTodoClass {

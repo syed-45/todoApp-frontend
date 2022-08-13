@@ -1,5 +1,5 @@
 import "./App.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import TodoList, { todoType } from "./Components/todoList";
 
@@ -12,23 +12,38 @@ import TodoList, { todoType } from "./Components/todoList";
 
 function App(): JSX.Element {
   const [inputText, setInputText] = useState("");
-  const [text, setText] = useState("");
-  const [allTodos, setAllTodos] = useState<JSX.Element[]>([])
+  const [allTodos, setAllTodos] = useState<JSX.Element[]>([]);
 
-  axios.get("https://todo-list-syed.herokuapp.com/items/").then((res) => {
-        console.log(res);
-        setAllTodos(res.data.map((oneData: any) => <TodoList todo={oneData.todo} id={oneData.id} key={oneData.id}/>))
-        // setText(res.data[7].todo);
-  });
+  useEffect(() => {
+    axios.get("https://todo-list-syed.herokuapp.com/items/").then((res) => {
+      console.log(res);
+      setAllTodos(
+        res.data.map((oneData: { todo: string; id: number }) => (
+          <TodoList todo={oneData.todo} id={oneData.id} key={oneData.id} />
+        ))
+      );
+    });
+  }, []);
 
   const handleOnEnter = (key: string): void => {
     if (key === "Enter") {
       console.log("entered!");
       //send current input to backend
-      axios.get("https://todo-list-syed.herokuapp.com/items/").then((res) => {
-        console.log(res);
-        setText(res.data[7].todo);
-      });
+      axios
+        .post("https://todo-list-syed.herokuapp.com/items/", {
+          todo: inputText,
+        })
+        .then((res) =>
+          setAllTodos([
+            ...allTodos,
+            <TodoList
+              todo={res.data.todo}
+              id={res.data.id}
+              key={res.data.id}
+            />,
+          ])
+        );
+      setInputText("");
     }
   };
 
@@ -36,6 +51,7 @@ function App(): JSX.Element {
     setInputText(input);
   };
 
+  // const handleEditCLick
 
   return (
     <>
@@ -47,7 +63,7 @@ function App(): JSX.Element {
         onChange={(ev) => handleInputChange(ev.target.value)}
         placeholder="Create a new todo..."
       ></input>
-      <main>        
+      <main>
         {allTodos}
         <div className="todoListClass"> - go gorceries </div>{" "}
         <div className="editClass">EDIT </div>
