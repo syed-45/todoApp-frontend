@@ -11,9 +11,17 @@ function App(): JSX.Element {
     axios.get("https://todo-list-syed.herokuapp.com/items/").then((res) => {
       console.log(res);
       setAllTodos(
-        res.data.map((oneData: { todo: string; id: number }) => (
-          <TodoList todo={oneData.todo} id={oneData.id} key={oneData.id} />
-        ))
+        res.data.map(
+          (oneData: { todo: string; id: number; checked: boolean }) => (
+            <TodoList
+              todo={oneData.todo}
+              id={oneData.id}
+              key={oneData.id}
+              onClick={handleDeleteClick}
+              checked={oneData.checked}
+            />
+          )
+        )
       );
     });
   }, []);
@@ -23,6 +31,7 @@ function App(): JSX.Element {
       axios
         .post("https://todo-list-syed.herokuapp.com/items/", {
           todo: inputText,
+          checked: false,
         })
         .then((res) =>
           setAllTodos([
@@ -31,6 +40,8 @@ function App(): JSX.Element {
               todo={res.data.todo}
               id={res.data.id}
               key={res.data.id}
+              onClick={handleDeleteClick}
+              checked={false}
             />,
           ])
         );
@@ -42,7 +53,18 @@ function App(): JSX.Element {
     setInputText(input);
   };
 
-  // const handleEditCLick
+  const handleDeleteClick = (id: number): void => {
+    const currentTodos = [...allTodos];
+    const removeIndex = currentTodos.findIndex((todo) => {
+      if (todo.key) {
+        return parseInt(todo.key.toString()) === id;
+      }
+      return false;
+    });
+    // currentTodos.splice(removeIndex);
+    // setAllTodos(currentTodos)
+    console.log(removeIndex);
+  };
 
   return (
     <>
@@ -54,18 +76,7 @@ function App(): JSX.Element {
         onChange={(ev) => handleInputChange(ev.target.value)}
         placeholder="Create a new todo..."
       ></input>
-      <main>
-        {allTodos}
-        <div className="todoListClass"> - go gorceries </div>{" "}
-        <div className="editClass">EDIT </div>
-        <div className="deleteClass"> DELETE</div>
-        <div className="todoListClass"> - clean laundry </div>{" "}
-        <div className="editClass">EDIT </div>
-        <div className="deleteClass"> DELETE</div>
-        <div className="todoListClass"> - buy charger </div>{" "}
-        <div className="editClass">EDIT </div>
-        <div className="deleteClass"> DELETE</div>
-      </main>
+      <main>{allTodos}</main>
     </>
   );
 }
