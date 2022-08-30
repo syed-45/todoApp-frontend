@@ -6,6 +6,7 @@ h1 {
   background-color: rgb(241 241 241);
   width: 80%;
   border: none;
+  flex: 80%;
 }
 
 .addTodoClass {
@@ -15,12 +16,12 @@ h1 {
 
 .editClass {
   background-color: rgb(99, 255, 47);
-  width: 5%;
+  flex: 5%;
 }
 
 .deleteClass {
   background-color: red;
-  width: 5%;
+  flex: 0%;
 }
 
 .listClass {
