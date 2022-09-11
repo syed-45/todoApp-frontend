@@ -12,8 +12,7 @@ export interface todoType {
 function TodoList(props: todoType): JSX.Element {
   const [todoReadOnly, setTodoReadOnly] = useState(true);
   const [todoInput, setTodoInput] = useState(props.todo);
-  const [checked, setChecked] = useState(props.checked);
-  const [checkSign, setCheckSign] = useState(checked ? "● " : "◯ ");
+  const [checked, setChecked] = useState(props.checked);  
 
   const handleTodoEdit = (editText: string): void => {
     setTodoInput(editText);
@@ -28,18 +27,12 @@ function TodoList(props: todoType): JSX.Element {
     }
   };
 
-  const handleCheckClick = (): void => {
-    console.log("checked");
+  const handleCheckClick = (): void => {    
     axios
       .patch(`https://todo-list-syed.herokuapp.com/items/${props.id}`, {
         checked: !checked,
       })
-      .then(() => {
-        if (!checked === true) {
-          setCheckSign("● ");
-        } else {
-          setCheckSign("◯ ");
-        }
+      .then(() => {        
         setChecked(!checked);
       });
   };
@@ -47,7 +40,7 @@ function TodoList(props: todoType): JSX.Element {
   return (
     <div className="listClass">
       <div className="checkClass" onClick={() => handleCheckClick()}>
-        {checkSign}
+        {checked ? "⬤ " : "◯ "}
       </div>
       <input
         className="todoListClass"

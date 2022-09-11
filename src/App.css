@@ -1,34 +1,42 @@
-h1 {
-  text-align: center;
-}
 
-.todoListClass {
-  background-color: rgb(241 241 241);
-  width: 80%;
-  border: none;
-  flex: 80%;
+body {
+  text-align: center;
 }
 
 .addTodoClass {
   border: 0px;
+  font-size: 25px;
   background-color: aquamarine;
-}
-
-.editClass {
-  background-color: rgb(99, 255, 47);
-  flex: 5%;
-}
-
-.deleteClass {
-  background-color: red;
-  flex: 0%;
+  margin-bottom: 20px;
 }
 
 .listClass {
   display: flex;
+  justify-content: center;
+  align-items: stretch;  
+}
+
+.todoListClass {
+  font-size: 25px;
+  background-color: rgb(241 241 241);
+  border: none;
+  flex: 1 1 0;
+  
+}
+
+
+.editClass {
+  background-color: rgb(99, 255, 47);
+  /* flex: 5%; */
+}
+
+.deleteClass {
+  background-color: red;
+  /* flex: 1%; */
 }
 
 .checkClass {
   background-color: rgb(241 241 241);
-  width: max-content;
+  flex: 0 0 10px;
+  height: auto;  
 }
